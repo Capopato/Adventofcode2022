@@ -21,7 +21,7 @@ class Day2{
         let rock: number = 1
         let paper: number = 2
         let scissor: number = 3
-        
+
         let count: number = 0
 
         for(let i = 0; i < this.splitArr.length; i++){
@@ -36,23 +36,23 @@ class Day2{
                 count += draw + scissor
             }
             // winning conditions
-            else if(this.splitArr[i][0] == 'A'  && this.splitArr[i][1] == 'Y'){
+            else if(this.splitArr[i][0] == 'A' && this.splitArr[i][1] == 'Y'){
                 count += win + paper
             }
-            else if(this.splitArr[i][0] == 'B'  && this.splitArr[i][1] == 'Z'){
+            else if(this.splitArr[i][0] == 'B' && this.splitArr[i][1] == 'Z'){
                 count += win + scissor
             }
-            else if(this.splitArr[i][0] == 'C'  && this.splitArr[i][1] == 'X'){
+            else if(this.splitArr[i][0] == 'C' && this.splitArr[i][1] == 'X'){
                 count += win + rock
             }
             // losing conditions
-            else if(this.splitArr[i][0] == 'A'  && this.splitArr[i][1] == 'Z'){
+            else if(this.splitArr[i][0] == 'A' && this.splitArr[i][1] == 'Z'){
                 count += scissor
             }
-            else if(this.splitArr[i][0] == 'B'  && this.splitArr[i][1] == 'X'){
+            else if(this.splitArr[i][0] == 'B' && this.splitArr[i][1] == 'X'){
                 count += rock
             }
-            else if(this.splitArr[i][0] == 'C'  && this.splitArr[i][1] == 'Y'){
+            else if(this.splitArr[i][0] == 'C' && this.splitArr[i][1] == 'Y'){
                 count += paper
             }
         }
