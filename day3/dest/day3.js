@@ -5,54 +5,74 @@ class Day3 {
     constructor() {
         this.splitted = [];
         this.difference = [];
-        this.importData = () => {
-            this.str = (0, fs_1.readFileSync)('./dest/input.txt', { encoding: "utf-8" }).toString();
+        /**
+         * This method returns the packing instructions in string format
+         */
+        this.getPackingInstructionsData = () => {
+            const rucksackContainments = (0, fs_1.readFileSync)('./dest/input.txt', { encoding: "utf-8" }).toString();
+            return rucksackContainments;
         };
-        this.stringsSplit = () => {
-            let arr = this.str.split('\n');
-            arr.map(a => {
-                var _a;
+        /**
+         * This method return the packing instructions split per rucksack and per compartment
+         * of the rucksack
+         */
+        this.ruckSackCompartments = () => {
+            const rucksackContainments = this.getPackingInstructionsData();
+            let ruckSackCompartment = [];
+            const rucksack = rucksackContainments.split('\n');
+            rucksack.map(a => {
                 // console.log(a.length)
                 let middle = a.length / 2;
                 let s1 = a.substring(0, middle);
                 let s2 = a.substring(middle); // I had middle + 1 and this was causing the issie that only 287 rows were read instead of 300.
-                (_a = this.splitted) === null || _a === void 0 ? void 0 : _a.push([s1, s2]);
+                ruckSackCompartment.push([s1, s2]);
             });
+            return ruckSackCompartment;
         };
-        this.compareString = () => {
-            let tempArr = [];
-            for (let i = 0; i < this.splitted.length; i++) { // Loop over string
-                let str1 = this.splitted[i][0].split(''); // Split string one because I am going to loop over this one
-                let str2 = this.splitted[i][1]; // Let it as string to use .includes
+        /**
+         *
+         * @returns This overlap of letters in of the 2 compartments per rucksack
+         */
+        this.compareCompartments = () => {
+            const ruckSackCompartment = this.ruckSackCompartments();
+            let compartmentOverlap = [];
+            let temporaryArray = [];
+            for (let i = 0; i < ruckSackCompartment.length; i++) { // Loop over string
+                let str1 = ruckSackCompartment[i][0].split(''); // Split string one because I am going to loop over this one
+                let str2 = ruckSackCompartment[i][1]; // Let it as string to use .includes
                 for (let j = 0; j < str1.length; j++) { // New for loop to iterate over str1.
-                    if (str2.includes(str1[j]) && !tempArr.includes(str1[j])) { // If str2.includes the values of str1[j] and the same value is NOT already in the temporary array. Push it to a temporary array.
-                        tempArr.push(str1[j]);
+                    if (str2.includes(str1[j]) && !temporaryArray.includes(str1[j])) { // If str2.includes the values of str1[j] and the same value is NOT already in the temporary array. Push it to a temporary array.
+                        temporaryArray.push(str1[j]);
                     }
                     else {
                         //pass 
                     }
                 }
-                this.difference.push(...tempArr); // after every iteration of a whole string push it from the temporary array to the definite array.
-                tempArr = []; // clear out the temp array again.
+                compartmentOverlap.push(...temporaryArray); // after every iteration of a whole string push it from the temporary array to the definite array.
+                temporaryArray = []; // clear out the temp array again.
             }
+            return compartmentOverlap;
         };
+        /**
+         * This method returns the sum of the values of the overlap.
+         */
         this.findValues = () => {
-            var _a;
+            const compartmentOverlap = this.compareCompartments();
             let values = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             let count = 0;
             let countRows = 0;
-            (_a = this.difference) === null || _a === void 0 ? void 0 : _a.map(a => {
+            compartmentOverlap.map(a => {
                 count += values.indexOf(a);
-                countRows += 1;
-                console.log(a, values.indexOf(a));
+                // countRows += 1
+                // console.log(a, values.indexOf(a))
             });
             console.log(count);
-            console.log(countRows);
+            // console.log(countRows)
         };
     }
 }
 let day3 = new Day3;
-day3.importData();
-day3.stringsSplit();
-day3.compareString();
+day3.getPackingInstructionsData();
+day3.ruckSackCompartments();
+day3.compareCompartments();
 day3.findValues();

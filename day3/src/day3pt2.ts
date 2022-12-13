@@ -5,48 +5,61 @@ class Day3{
     private splitted?: string[][] = []
     private difference?: string[] = []
 
-    importData = () => {
-        this.str = readFileSync('./dest/input.txt', {encoding: "utf-8"}).toString()
+    /**
+     * This method returns the packing instructions in string format
+     */
+     getPackingInstructionsData = () => {
+        const rucksackContainments: string = readFileSync('./dest/input.txt', {encoding: "utf-8"}).toString().split('\n')
+        return rucksackContainments
     }
 
-    splitString = () => {
-        this.splitted = this.str?.split('\n')
-    }
+    /**
+     * 
+     * @returns The overlap of values per 3 rugsacks (strings) in an array format
+     * 
+     */
+    perThreeRucksacks = () => {
+        const rucksackContainments = this.getPackingInstructionsData()
+        let temporaryArray: string[] = []
+        let compartmentOverlap: string[] = []
 
-    perThreeString = () => {
-        let tempArr: string[] = []
-        for (let i = 0; i < this.splitted.length; i+=3){ 
-            let str1: string[] = this.splitted[i].split('') 
-            let str2: string = this.splitted[i+1] 
-            let str3: string = this.splitted[i+2]
+        for (let i = 0; i < rucksackContainments.length; i+=3){ 
+            let group1: string[] = rucksackContainments[i].split('') 
+            let group2: string = rucksackContainments[i+1] 
+            let group3: string = rucksackContainments[i+2]
 
-            for (let j = 0; j < str1.length; j++){
-                if(str2.includes(str1[j]) && str3.includes(str1[j]) && !tempArr.includes(str1[j])){
-                    tempArr.push(str1[j])
+            for (let j = 0; j < group1.length; j++){
+                if(group2.includes(group1[j]) && group3.includes(group1[j]) && !temporaryArray.includes(group1[j])){
+                    temporaryArray.push(group1[j])
                 }
             }
-            this.difference?.push(...tempArr)
-            tempArr = []
+            compartmentOverlap.push(...temporaryArray)
+            temporaryArray = []
         }
+        return compartmentOverlap
     }
 
+    /**
+     * This method returns the sum of the values of the overlap.
+     */
     findValues = () => {
+        const compartmentOverlap = this.perThreeRucksacks()
         let values: string = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         let count: number = 0
         let countRows: number = 0
 
-        this.difference?.map(a => {
+        compartmentOverlap.map(a => {
             count += values.indexOf(a)
-            countRows += 1
-            console.log(a, values.indexOf(a))
+            // countRows += 1
+            // console.log(a, values.indexOf(a))
         })
         console.log(count)
-        console.log(countRows)
+        // console.log(countRows)
     }
 }
 
 let day3 = new Day3
-day3.importData()
-day3.splitString()
-day3.perThreeString()
+day3.getPackingInstructionsData()
+// day3.splitString()
+day3.perThreeRucksacks()
 day3.findValues()

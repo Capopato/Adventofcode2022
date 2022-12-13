@@ -5,46 +5,56 @@ class Day3 {
     constructor() {
         this.splitted = [];
         this.difference = [];
-        this.importData = () => {
-            this.str = (0, fs_1.readFileSync)('./dest/input.txt', { encoding: "utf-8" }).toString();
+        /**
+         * This method returns the packing instructions in string format
+         */
+        this.getPackingInstructionsData = () => {
+            const rucksackContainments = (0, fs_1.readFileSync)('./dest/input.txt', { encoding: "utf-8" }).toString().split('\n');
+            return rucksackContainments;
         };
-        this.splitString = () => {
-            var _a;
-            this.splitted = (_a = this.str) === null || _a === void 0 ? void 0 : _a.split('\n');
-        };
-        this.perThreeString = () => {
-            var _a;
-            let tempArr = [];
-            for (let i = 0; i < this.splitted.length; i += 3) {
-                let str1 = this.splitted[i].split('');
-                let str2 = this.splitted[i + 1];
-                let str3 = this.splitted[i + 2];
-                for (let j = 0; j < str1.length; j++) {
-                    if (str2.includes(str1[j]) && str3.includes(str1[j]) && !tempArr.includes(str1[j])) {
-                        tempArr.push(str1[j]);
+        /**
+         *
+         * @returns The overlap of values per 3 rugsacks (strings) in an array format
+         *
+         */
+        this.perThreeRucksacks = () => {
+            const rucksackContainments = this.getPackingInstructionsData();
+            let temporaryArray = [];
+            let compartmentOverlap = [];
+            for (let i = 0; i < rucksackContainments.length; i += 3) {
+                let group1 = rucksackContainments[i].split('');
+                let group2 = rucksackContainments[i + 1];
+                let group3 = rucksackContainments[i + 2];
+                for (let j = 0; j < group1.length; j++) {
+                    if (group2.includes(group1[j]) && group3.includes(group1[j]) && !temporaryArray.includes(group1[j])) {
+                        temporaryArray.push(group1[j]);
                     }
                 }
-                (_a = this.difference) === null || _a === void 0 ? void 0 : _a.push(...tempArr);
-                tempArr = [];
+                compartmentOverlap.push(...temporaryArray);
+                temporaryArray = [];
             }
+            return compartmentOverlap;
         };
+        /**
+         * This method returns the sum of the values of the overlap.
+         */
         this.findValues = () => {
-            var _a;
+            const compartmentOverlap = this.perThreeRucksacks();
             let values = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
             let count = 0;
             let countRows = 0;
-            (_a = this.difference) === null || _a === void 0 ? void 0 : _a.map(a => {
+            compartmentOverlap.map(a => {
                 count += values.indexOf(a);
-                countRows += 1;
-                console.log(a, values.indexOf(a));
+                // countRows += 1
+                // console.log(a, values.indexOf(a))
             });
             console.log(count);
-            console.log(countRows);
+            // console.log(countRows)
         };
     }
 }
 let day3 = new Day3;
-day3.importData();
-day3.splitString();
-day3.perThreeString();
+day3.getPackingInstructionsData();
+// day3.splitString()
+day3.perThreeRucksacks();
 day3.findValues();
