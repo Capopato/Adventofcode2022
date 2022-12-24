@@ -1,14 +1,13 @@
 import { readFileSync } from 'fs'
 
-let count: number = 0
 const assignmentPairs: string = readFileSync('./input.txt', {encoding: "utf-8"})
 const splitOfPairs: string[] = assignmentPairs.split('\n')
-
 const splitPerPair: splitPerPairOptions[] = []
 interface splitPerPairOptions {
     pairOne: number[]
     pairTwo: number[]
 }
+let count: number = 0
 
 // split per pair and convert to number
 splitOfPairs.map((twoPairs: string) => {

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
-let count = 0;
 const assignmentPairs = (0, fs_1.readFileSync)('./input.txt', { encoding: "utf-8" });
 const splitOfPairs = assignmentPairs.split('\n');
 const splitPerPair = [];
+let count = 0;
 // split per pair and convert to number
 splitOfPairs.map((twoPairs) => {
     const pairs = twoPairs.split(',');
