@@ -13,6 +13,7 @@ splitOfPairs.map((twoPairs) => {
         pairTwo: pairs[1].split('-').map(Number)
     });
 });
+// Part 1
 for (let i = 0; i < splitPerPair.length; i++) {
     // Create constant of start/end num of pair one and two
     const pairOneStartNum = splitPerPair[i].pairOne[0];
@@ -28,4 +29,19 @@ for (let i = 0; i < splitPerPair.length; i++) {
         count += 1;
     }
 }
-console.log(count);
+// Part 2
+let countPartTwo = 0;
+for (let i = 0; i < splitPerPair.length; i++) {
+    // Create constant of start/end num of pair one and two
+    const pairOneStartNum = splitPerPair[i].pairOne[0];
+    const pairOneEndNum = splitPerPair[i].pairOne[1];
+    const pairTwoStartNum = splitPerPair[i].pairTwo[0];
+    const pairTwoEndNum = splitPerPair[i].pairTwo[1];
+    // Check if end number of pair one has overlap with startnumber of pair two 
+    // And check if end number of pair two if equal of higher than start number pair one.
+    if (pairOneEndNum >= pairTwoStartNum && pairTwoEndNum >= pairOneStartNum) {
+        console.log(pairOneEndNum);
+        countPartTwo += 1;
+    }
+}
+console.log(countPartTwo);
