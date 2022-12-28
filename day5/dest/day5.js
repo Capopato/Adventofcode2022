@@ -13,10 +13,8 @@ const orderOfTheCrateArrangement = () => {
     // Push the moves to a different array
     crateArrangementInput.map(column => {
         let index = 1;
-        if (column.split(' ')[0] == 'move') {
-            moves.push(column);
-        }
-        else {
+        // != move because every row that starts with move is about movements and that will be used later
+        if (column.split(' ')[0] != 'move') {
             // Index + 4 because in the string the space between every value is 4 spaces
             for (let i = 1; i < column.length; i++) {
                 const row1 = column[index];
